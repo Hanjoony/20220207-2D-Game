@@ -141,7 +141,7 @@
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="Floor.h" />
-    <ClInclude Include="Gola.h" />
+    <ClInclude Include="Goal.h" />
     <ClInclude Include="MyEngine.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Wall.h" />

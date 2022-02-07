@@ -3,5 +3,8 @@
 
 class Floor : public Actor
 {
+public:
+	Floor();
+	virtual ~Floor();
 };
 

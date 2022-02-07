@@ -3,5 +3,8 @@
 
 class Player : public Actor
 {
+public:
+	Player();
+	virtual ~Player();
 };
 
