@@ -15,6 +15,8 @@ public:
 	void Input();
 	void BeginPlay();
 
+	const std::vector<class Actor*>& GetActorList() { return ActorList; }  // 원본 값 지우지 못하게 const 사용
+
 protected:
 	std::vector<class Actor*> ActorList;
 
