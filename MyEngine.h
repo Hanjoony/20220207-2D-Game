@@ -1,4 +1,5 @@
 #pragma once
+#include<string>
 
 class MyEngine
 {
@@ -13,6 +14,7 @@ public:
 	void SpawnActor(class Actor* NewActor);		// 전방 선언, 액터 생성
 	void DestroyActor(class Actor* DestroyActor);		// 액터 만들었으니 지우기
 
+	void LoadLevel(std::string MapName);
 
 protected:							// 밖에서 접근하면 안되는 것들
 	void BeginPlay();

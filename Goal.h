@@ -5,6 +5,7 @@ class Goal : public Actor
 {
 public:
 	Goal();
+	Goal(int NewX, int NewY);
 	virtual ~Goal();
 };
 

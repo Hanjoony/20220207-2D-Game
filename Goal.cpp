@@ -7,6 +7,13 @@ Goal::Goal()
 	Shape = 'G';
 }
 
+Goal::Goal(int NewX, int NewY)
+{
+	X = NewX;
+	Y = NewY;
+	Shape = 'G';
+}
+
 Goal::~Goal()
 {
 }

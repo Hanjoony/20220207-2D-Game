@@ -1,6 +1,6 @@
 #include "Actor.h"
 #include <iostream>
-#include <Windows.h>
+#include "Util.h"
 
 Actor::Actor()
 {
@@ -24,10 +24,8 @@ void Actor::Tick()
 
 void Actor::Render()
 {
-	COORD Cur;
-	Cur.X = GetX();
-	Cur.Y = GetY();
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Cur);
+	// static ¸â¹ö ÇÔ¼ö
+	Util::GotoXY(GetX(), GetY());
 
 	std::cout << GetShape() << std::endl;
 }

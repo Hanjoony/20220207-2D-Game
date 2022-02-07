@@ -1,10 +1,29 @@
 #include <iostream>
+#include <fstream>
 #include "MyEngine.h"
 #include "Floor.h"
 #include "Player.h"
 #include "Wall.h"
 #include "Goal.h"
 
+using namespace std;
+
+int main()
+{
+	MyEngine* PlayEngine = new MyEngine();
+
+	PlayEngine->LoadLevel("Level01.map");
+
+
+	PlayEngine->Run();
+
+	delete PlayEngine;
+	PlayEngine = nullptr;
+
+	return 0;
+}
+
+/*
 int main()
 {
 	MyEngine* PlayEngine = new MyEngine();
@@ -51,6 +70,11 @@ int main()
 	PlayEngine->SpawnActor(new Wall(8, 9));
 	PlayEngine->SpawnActor(new Wall(9, 9));
 
+	PlayEngine->SpawnActor(new Floor(1, 1));
+
+	PlayEngine->SpawnActor(new Player(1, 1));
+	PlayEngine->SpawnActor(new Goal(8, 8));
+
 	PlayEngine->Run();
 
 	delete PlayEngine;
@@ -58,3 +82,4 @@ int main()
 
 	return 0;
 }
+*/

@@ -5,6 +5,7 @@ class Floor : public Actor
 {
 public:
 	Floor();
+	Floor(int NewX, int NewY);
 	virtual ~Floor();
 };
 

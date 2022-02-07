@@ -7,6 +7,13 @@ Player::Player()
 	Shape = 'P';
 }
 
+Player::Player(int NewX, int NewY)
+{
+	X = NewX;
+	Y = NewY;
+	Shape = 'P';
+}
+
 Player::~Player()
 {
 }
