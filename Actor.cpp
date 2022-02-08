@@ -22,7 +22,7 @@ void Actor::Tick()
 {
 }
 
-void Actor::Render()
+void Actor::Render(SDL_Renderer* MyRenderer)
 {
 	// static ¸â¹ö ÇÔ¼ö
 	Util::GotoXY(GetX(), GetY());

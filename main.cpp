@@ -10,13 +10,14 @@ using namespace std;
 
 int SDL_main(int argc, char* argv[])
 {
-	MyEngine* PlayEngine = new MyEngine("미로게임", "Level01.Map", 800, 600);
+	MyEngine* PlayEngine = new MyEngine("Maze Game", "Level01.Map", 800, 600);
+
 	PlayEngine->Run();
 
 	delete PlayEngine;
 	PlayEngine = nullptr;
 
-	bool blsRunning = true;
+	// bool blsRunning = true;
 
 	return 0;
 }

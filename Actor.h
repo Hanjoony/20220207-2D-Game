@@ -1,4 +1,6 @@
 #pragma once
+#include "SDL.h"								// 색상을 집어넣기 위해 사용
+
 class Actor
 {
 public:
@@ -9,7 +11,7 @@ public:
 	virtual ~Actor();
 
 	virtual void Tick();
-	virtual void Render();
+	virtual void Render(SDL_Renderer* MyRenderer);
 	virtual void BeginPlay();
 
 	inline virtual void SetActorLocation(int NewX, int NewY);
@@ -22,6 +24,7 @@ protected:
 	int X;						// 위치 값
 	int Y;
 	char Shape;
-
+	SDL_Color Color;			// 색상 넣기 위해
+	int TileSize = 30;
 };
 

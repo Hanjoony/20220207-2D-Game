@@ -2,7 +2,7 @@
 #include<string>
 #include "SDL.h"
 
-class World;
+class World;				// 전방 선언
 
 class MyEngine
 {
@@ -32,7 +32,7 @@ protected:							// 밖에서 접근하면 안되는 것들
 
 protected:
 	bool blsRunning = true;			// 엔진 실행 중인지 상태 확인
-	World* CurrentWorld;			// 전방선언 해서 어딘가에 있을거라는거, 포인터로 위치를 가르켜야함 
+	World* CurrentWorld;			// 포인터로 위치를 가르켜야함 
 
 	SDL_Window* MyWindow;
 	SDL_Renderer* MyRenderer;

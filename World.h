@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "SDL.h"
 
 class World
 {
@@ -11,7 +12,7 @@ public:
 	void DestroyActor(class Actor* DestroyActor);
 
 	void Tick();
-	void Render();
+	void Render(SDL_Renderer* MyRenderer);
 	void Input();
 	void BeginPlay();
 
