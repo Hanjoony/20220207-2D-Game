@@ -6,10 +6,22 @@
 #include "Goal.h"
 #include <iostream>
 
+/*
 MyEngine::MyEngine()
 {
 	CurrentWorld = new World();
 	blsRunning = true;				// 엔진 시작 후 초기화
+}
+*/
+MyEngine::MyEngine(std::string Title, std::string LevelName, int Width, int Height)
+{
+	CurrentWorld = new World();
+	blsRunning = true;
+
+	LoadLevel(LevelName);
+
+	Init(Title, Width, Height);
+
 }
 
 MyEngine::~MyEngine()
@@ -17,6 +29,32 @@ MyEngine::~MyEngine()
 	delete CurrentWorld;
 	CurrentWorld = nullptr;
 	blsRunning = false;
+	
+	Term();
+}
+
+void MyEngine::Init(std::string Title, int Width, int Height)
+{
+	if (SDL_Init(SDL_INIT_VIDEO) < 0)
+	{
+		std::cout << "SDL_Init Error :" << SDL_GetError() << std::endl;
+	}
+
+	SDL_Window* MyWindow = SDL_CreateWindow(Title.c_str(), 100, 100, Width, Height, SDL_WINDOW_OPENGL);
+
+	SDL_Renderer* MyRenderer = SDL_CreateRenderer(MyWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE);
+
+	if (MyRenderer == nullptr)
+	{
+		std::cout << "can't Create renderer :" << SDL_GetError() << std::endl;
+	}
+}
+
+void MyEngine::Term()
+{
+	SDL_DestroyRenderer(MyRenderer);			// 생성 했으니 지워주기
+	SDL_DestroyWindow(MyWindow);				// 윈도우 창 생성 했으면 다시 없에 주는게 필요
+	SDL_Quit();
 }
 
 void MyEngine::Run()
@@ -140,15 +178,50 @@ void MyEngine::BeginPlay()
 
 void MyEngine::Tick()
 {
+	//엔진에서 기본 처리 하는 이벤트
+	switch (MyEvent.type)
+	{
+	case SDL_QUIT:							// 닫기 누르면 이벤트 종료
+		blsRunning = false;
+		break;
+	case SDL_KEYDOWN:						// 키누르면 어떤 키가 눌린지 잡힘
+		std::cout << SDL_GetKeyName(MyEvent.key.keysym.sym) << "키 눌러짐" << std::endl;
+		switch (MyEvent.key.keysym.sym)
+		{
+		case SDLK_q:						// q 누르면 종료
+			blsRunning = false;
+			break;
+		}
+		break;
+	case SDL_MOUSEBUTTONDOWN:				// 마우스 버튼 눌러지는지 잡힘
+		std::cout << (MyEvent.button.button == SDL_BUTTON_LEFT) << "마우스 버튼 눌러짐" << std::endl;
+		std::cout << "(" << MyEvent.button.x << ", " << MyEvent.button.y << ")" << std::endl;			// 마우스 좌표도 표시
+		break;
+	}
+
 	CurrentWorld->Tick();
 }
 
 void MyEngine::Render()
 {
 	CurrentWorld->Render();
+
+	// 그릴 리스트 준비
+	// PreRender	(그릴 준비, 그릴 물체 배치)
+
+
+
+
+	// GPU한테 그리기 시키기
+	// Render
+	SDL_RenderPresent(MyRenderer);
+
 }
 
 void MyEngine::Input()
 {
+	// Input
+	SDL_PollEvent(&MyEvent);
+
 	CurrentWorld->Input();
 }
