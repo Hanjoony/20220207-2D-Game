@@ -10,7 +10,7 @@ public:
 
 	virtual ~Actor();
 
-	virtual void Tick();
+	virtual void Tick(SDL_Event& MyEvent);
 	virtual void Render(SDL_Renderer* MyRenderer);
 	virtual void BeginPlay();
 

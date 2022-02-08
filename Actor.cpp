@@ -18,14 +18,14 @@ Actor::~Actor()
 {
 }
 
-void Actor::Tick()
+void Actor::Tick(SDL_Event& MyEvent)
 {
 }
 
 void Actor::Render(SDL_Renderer* MyRenderer)
 {
 	// static 멤버 함수
-	// Util::GotoXY(GetX(), GetY());
+	// Util::GotoXY(GetX(), GetY());				// 텍스트에 그림
 
 	// std::cout << GetShape() << std::endl;
 

@@ -11,9 +11,8 @@ public:
 	void SpawnActor(class Actor* NewActor);
 	void DestroyActor(class Actor* DestroyActor);
 
-	void Tick();
+	void Tick(SDL_Event& MyEvent);
 	void Render(SDL_Renderer* MyRenderer);
-	void Input();
 	void BeginPlay();
 
 	const std::vector<class Actor*>& GetActorList() { return ActorList; }  // 원본 값 지우지 못하게 const 사용

@@ -198,19 +198,18 @@ void MyEngine::Tick()
 		break;
 	}
 
-	CurrentWorld->Tick();
+	CurrentWorld->Tick(MyEvent);
 }
 
 void MyEngine::Render()
 {
+	// 화면 지우기
 	SDL_SetRenderDrawColor(MyRenderer, 0xff, 0xff, 0xff, 0xff);
 	SDL_RenderClear(MyRenderer);
 	// 그릴 리스트 준비
 	// PreRender	(그릴 준비, 그릴 물체 배치)
 
 	CurrentWorld->Render(MyRenderer);
-
-
 
 	// GPU한테 그리기 시키기
 	// Render
@@ -221,6 +220,4 @@ void MyEngine::Input()
 {
 	// Input
 	SDL_PollEvent(&MyEvent);
-
-	CurrentWorld->Input();
 }

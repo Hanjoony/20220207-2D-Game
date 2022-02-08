@@ -25,3 +25,25 @@ Player::Player(int NewX, int NewY)
 Player::~Player()
 {
 }
+
+void Player::Tick(SDL_Event& MyEvent)
+{
+	if (MyEvent.type == SDL_KEYDOWN)		// 두칸씩 안 움직이게
+	{
+		switch (MyEvent.key.keysym.sym)
+		{
+		case SDLK_LEFT:
+			X--;
+			break;
+		case SDLK_RIGHT:
+			X++;
+			break;
+		case SDLK_UP:
+			Y--;
+			break;
+		case SDLK_DOWN:
+			Y++;
+			break;
+		}
+	}
+}
