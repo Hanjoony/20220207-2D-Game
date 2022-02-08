@@ -28,8 +28,5 @@ Wall::~Wall()
 
 void Wall::Render(SDL_Renderer* MyRenderer)
 {
-	SDL_SetRenderDrawColor(MyRenderer, Color.r, Color.g, Color.b, Color.a);
-	SDL_Rect Rect = { GetX() * TileSize, GetY() * TileSize, TileSize, TileSize };
-
-	SDL_RenderFillRect(MyRenderer, &Rect);
+	Actor::Render(MyRenderer);
 }
