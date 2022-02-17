@@ -26,10 +26,25 @@ Player::Player(int NewX, int NewY)
 	Color.a = 0xff;
 
 	ZOrder = 2;
+
+	//RAM
+	Surface = SDL_LoadBMP("Data/wall.bmp");
+	//GPU VRAM
+	Texture = SDL_CreateTextureFromSurface(MyEngine::GetRenderer(),
+		Surface);
 }
 
 Player::~Player()
 {
+	if (Surface)
+	{
+		SDL_FreeSurface(Surface);
+	}
+
+	if (Texture)
+	{
+		SDL_DestroyTexture(Texture);
+	}
 }
 
 void Player::Tick()
@@ -52,4 +67,12 @@ void Player::Tick()
 			break;
 		}
 	}
+}
+
+void Player::Render()
+{
+	SDL_Rect SrcRect = { 0, 0, Surface->w, Surface->h };
+	SDL_Rect DestRect = { GetX() * TileSize, GetY() * TileSize, TileSize, TileSize };
+
+	SDL_RenderCopy(MyEngine::GetRenderer(), Texture, &SrcRect, &DestRect);
 }

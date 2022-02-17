@@ -25,9 +25,9 @@ MyEngine::MyEngine(std::string Title, std::string LevelName, int Width, int Heig
 	CurrentWorld = std::make_unique<World>();
 	bIsRunning = true;
 
-	LoadLevel(LevelName);
-
 	Init(Title, Width, Height);
+
+	LoadLevel(LevelName);
 }
 
 MyEngine::~MyEngine()
