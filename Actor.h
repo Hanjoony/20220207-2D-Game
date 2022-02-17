@@ -10,8 +10,8 @@ public:
 
 	virtual ~Actor();
 
-	virtual void Tick(SDL_Event& MyEvent);
-	virtual void Render(SDL_Renderer* MyRenderer);
+	virtual void Tick();
+	virtual void Render();
 	virtual void BeginPlay();
 
 	inline virtual void SetActorLocation(int NewX, int NewY);
@@ -27,4 +27,3 @@ protected:
 	SDL_Color Color;			// 색상 넣기 위해
 	int TileSize = 30;
 };
-

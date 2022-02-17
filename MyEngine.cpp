@@ -1,35 +1,37 @@
-#include "myengine.h"
-#include "world.h"
+#include "MyEngine.h"
+#include "World.h"
 #include <fstream>
-#include "player.h"
-#include "wall.h"
-#include "goal.h"
+#include "Wall.h"
+#include "Player.h"
+#include "Goal.h"
 #include <iostream>
 
-/*
-MyEngine::MyEngine()
-{
-	CurrentWorld = new World();
-	blsRunning = true;				// 엔진 시작 후 초기화
-}
-*/
+//MyEngine::MyEngine()
+//{
+//	CurrentWorld = new World();
+//	bIsRunning = true;				// 엔진 시작 후 초기화
+//}
+
+SDL_Window* MyEngine::MyWindow = nullptr;
+SDL_Renderer* MyEngine::MyRenderer = nullptr;
+SDL_Event MyEngine::MyEvent;
+
 MyEngine::MyEngine(std::string Title, std::string LevelName, int Width, int Height)
 {
-	CurrentWorld = new World();
-	blsRunning = true;
+	CurrentWorld = std::make_unique<World>();
+	bIsRunning = true;
 
 	LoadLevel(LevelName);
 
 	Init(Title, Width, Height);
-
 }
 
 MyEngine::~MyEngine()
 {
-	delete CurrentWorld;
+	//delete CurrentWorld;
 	CurrentWorld = nullptr;
-	blsRunning = false;
-	
+	bIsRunning = false;
+
 	Term();
 }
 
@@ -58,9 +60,8 @@ void MyEngine::Term()
 
 void MyEngine::Run()
 {
-	// 1 Frame 한프레임 돌리는것
 	BeginPlay();
-	while (blsRunning)
+	while (bIsRunning)
 	{
 		Input();
 		Tick();
@@ -70,15 +71,15 @@ void MyEngine::Run()
 
 void MyEngine::Stop()
 {
-	blsRunning = false;
+	bIsRunning = false;
 }
 
-void MyEngine::SpawnActor(Actor* NewActor)
+void MyEngine::SpawnActor(std::shared_ptr<Actor> NewActor)
 {
 	CurrentWorld->SpawnActor(NewActor);
 }
 
-void MyEngine::DestroyActor(Actor* DestroyActor)
+void MyEngine::DestroyActor(std::shared_ptr<Actor> DestroyActor)
 {
 	CurrentWorld->DestroyActor(DestroyActor);
 }
@@ -99,18 +100,19 @@ void MyEngine::LoadLevel(std::string LoadMapName)
 			Y++;
 			continue;
 		case '*':
-			SpawnActor(new Wall(X, Y));
+			SpawnActor(std::make_shared<Wall>(X, Y));
 			break;
 		case 'P':
-			SpawnActor(new Player(X, Y));
+			SpawnActor(std::make_shared<Player>(X, Y));
 			break;
 		case 'G':
-			SpawnActor(new Goal(X, Y));
+			SpawnActor(std::make_shared<Goal>(X, Y));
 			break;
 		}
 
 		X++;
 	}
+
 	MapFile.close();
 }
 
@@ -121,10 +123,11 @@ void MyEngine::SaveLevel(std::string SaveMapName)
 	int MaxX = -99999;
 	int MaxY = -99999;
 
-	std::vector<Actor*> ActorList = CurrentWorld->GetActorList();
+	//std::vector<std::shared_ptr<Actor>> ActorList = CurrentWorld->GetActorList();
+	auto ActorList = CurrentWorld->GetActorList();
 
 
-	// 제일 큰 좌표값 저장 하기
+	//제일 큰 좌표값 저장 하기
 	for (auto SelectedActor : ActorList)
 	{
 		if (MaxX <= SelectedActor->GetX())
@@ -144,7 +147,7 @@ void MyEngine::SaveLevel(std::string SaveMapName)
 	{
 		for (int X = 0; X <= MaxX; ++X)
 		{
-			// 객체 저장
+			//객체 저장
 			for (auto SelectedActor : ActorList)
 			{
 				if (SelectedActor->GetX() == X && SelectedActor->GetY() == Y)
@@ -155,7 +158,7 @@ void MyEngine::SaveLevel(std::string SaveMapName)
 				}
 			}
 
-			// 빈칸 저장
+			//빈칸 저장
 			if (bIsWrite == false)
 			{
 				WriteFile.put(' ');
@@ -163,7 +166,7 @@ void MyEngine::SaveLevel(std::string SaveMapName)
 
 			bIsWrite = false;
 		}
-		// 줄 바꿈
+		//줄 바꿈
 		WriteFile.put('\n');
 	}
 
@@ -181,43 +184,39 @@ void MyEngine::Tick()
 	switch (MyEvent.type)
 	{
 	case SDL_QUIT:							// 닫기 누르면 이벤트 종료
-		blsRunning = false;
+		bIsRunning = false;
 		break;
 	case SDL_KEYDOWN:						// 키누르면 어떤 키가 눌린지 잡힘
-		std::cout << SDL_GetKeyName(MyEvent.key.keysym.sym) << "키 눌러짐" << std::endl;
 		switch (MyEvent.key.keysym.sym)
 		{
 		case SDLK_q:						// q 누르면 종료
-			blsRunning = false;
+			bIsRunning = false;
 			break;
 		}
 		break;
-	case SDL_MOUSEBUTTONDOWN:				// 마우스 버튼 눌러지는지 잡힘
-		std::cout << (MyEvent.button.button == SDL_BUTTON_LEFT) << "마우스 버튼 눌러짐" << std::endl;
-		std::cout << "(" << MyEvent.button.x << ", " << MyEvent.button.y << ")" << std::endl;			// 마우스 좌표도 표시
-		break;
 	}
 
-	CurrentWorld->Tick(MyEvent);
+
+	CurrentWorld->Tick();
 }
 
 void MyEngine::Render()
 {
-	// 화면 지우기
+	//화면지우기
 	SDL_SetRenderDrawColor(MyRenderer, 0xff, 0xff, 0xff, 0xff);
 	SDL_RenderClear(MyRenderer);
-	// 그릴 리스트 준비
-	// PreRender	(그릴 준비, 그릴 물체 배치)
+	//그릴 리스트 준비
+//PreRender(그릴 준비, 그릴 물체 배치)
 
-	CurrentWorld->Render(MyRenderer);
+	CurrentWorld->Render();
 
-	// GPU한테 그리기 시키기
-	// Render
+	//GPU야 그려라
+//Render
 	SDL_RenderPresent(MyRenderer);
 }
 
 void MyEngine::Input()
 {
-	// Input
+	//Input
 	SDL_PollEvent(&MyEvent);
 }

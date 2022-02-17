@@ -1,6 +1,7 @@
 #include "Actor.h"
 #include <iostream>
 #include "Util.h"
+#include "MyEngine.h"
 
 Actor::Actor()
 {
@@ -18,21 +19,20 @@ Actor::~Actor()
 {
 }
 
-void Actor::Tick(SDL_Event& MyEvent)
+void Actor::Tick()
 {
 }
 
-void Actor::Render(SDL_Renderer* MyRenderer)
+void Actor::Render()
 {
 	// static 멤버 함수
 	// Util::GotoXY(GetX(), GetY());				// 텍스트에 그림
-
 	// std::cout << GetShape() << std::endl;
 
-	SDL_SetRenderDrawColor(MyRenderer, Color.r, Color.g, Color.b, Color.a);
+	SDL_SetRenderDrawColor(MyEngine::GetRenderer(), Color.r, Color.g, Color.b, Color.a);
 	SDL_Rect Rect = { GetX() * TileSize, GetY() * TileSize, TileSize, TileSize };
 
-	SDL_RenderFillRect(MyRenderer, &Rect);
+	SDL_RenderFillRect(MyEngine::GetRenderer(), &Rect);
 }
 
 void Actor::BeginPlay()

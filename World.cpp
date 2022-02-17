@@ -24,58 +24,40 @@ World::~World()
 	// range for
 	for (auto CurrentActor : ActorList)		// 만든 액터 리스트 탐색해서 지우기
 	{
-		delete CurrentActor;
+		// delete CurrentActor;
 		CurrentActor = nullptr;
 	}
 
 	ActorList.clear();						// 액터 리스트도 초기화
 }
 
-void World::SpawnActor(Actor* NewActor)
+void World::SpawnActor(std::shared_ptr<Actor> NewActor)
 {
 	ActorList.push_back(NewActor);			// 새로만든 액터 넣어주기
 }
 
-void World::DestroyActor(Actor* DestroyActor)
+void World::DestroyActor(std::shared_ptr<Actor> DestroyActor)
 {
-	/*
-	for (auto iter = ActorList.begin(); iter != ActorList.end(); ++iter)
-	{
-		if (*iter == DestroyActor)
-		{
-			delete* iter;
-			*iter = nullptr;
-
-			//important
-			iter = ActorList.erase(iter);
-			break;
-		}
-	}
-	
-	auto DestroyIter = find(ActorList.begin(), ActorList.end(), DestroyActor);
-	ActorList.erase(DestroyIter);
-	*/
-
 	//자료구조 Actor 리스트에서 관리 리스트에서 삭제
 	ActorList.erase(find(ActorList.begin(), ActorList.end(), DestroyActor));
 	//메모리에서 실제로 삭제
-	delete DestroyActor;
+	// delete DestroyActor;
 	DestroyActor = nullptr;
 }
 
-void World::Tick(SDL_Event& MyEvent)
+void World::Tick()
 {
 	for (auto SelectedActor : ActorList)
 	{
-		SelectedActor->Tick(MyEvent);
+		SelectedActor->Tick();
 	}
 }
 
-void World::Render(SDL_Renderer* MyRenderer)
+void World::Render()
 {
 	for (auto SelectedActor : ActorList)
 	{
-		SelectedActor->Render(MyRenderer);
+		SelectedActor->Render();
 	}
 }
 
