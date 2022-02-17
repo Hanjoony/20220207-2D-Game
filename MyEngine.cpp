@@ -4,17 +4,20 @@
 #include "Wall.h"
 #include "Player.h"
 #include "Goal.h"
+#include "Floor.h"
 #include <iostream>
 
 //MyEngine::MyEngine()
 //{
 //	CurrentWorld = new World();
-//	bIsRunning = true;				// 엔진 시작 후 초기화
+//	bIsRunning = true;
 //}
 
 SDL_Window* MyEngine::MyWindow = nullptr;
 SDL_Renderer* MyEngine::MyRenderer = nullptr;
 SDL_Event MyEngine::MyEvent;
+std::unique_ptr<World> MyEngine::CurrentWorld;
+
 
 MyEngine::MyEngine(std::string Title, std::string LevelName, int Width, int Height)
 {
@@ -53,8 +56,8 @@ void MyEngine::Init(std::string Title, int Width, int Height)
 
 void MyEngine::Term()
 {
-	SDL_DestroyRenderer(MyRenderer);			// 생성 했으니 지워주기
-	SDL_DestroyWindow(MyWindow);				// 윈도우 창 생성 했으면 다시 없에 주는게 필요
+	SDL_DestroyRenderer(MyRenderer);
+	SDL_DestroyWindow(MyWindow);
 	SDL_Quit();
 }
 
@@ -90,7 +93,7 @@ void MyEngine::LoadLevel(std::string LoadMapName)
 	int X = 0;
 	int Y = 0;
 
-	while (!MapFile.eof())				// 파일이 끝인지 물어봄
+	while (!MapFile.eof())
 	{
 		char ReadData = MapFile.get();
 		switch (ReadData)
@@ -99,14 +102,20 @@ void MyEngine::LoadLevel(std::string LoadMapName)
 			X = 0;
 			Y++;
 			continue;
+		case ' ':
+			SpawnActor(std::make_shared<Floor>(X, Y));
+			break;
 		case '*':
 			SpawnActor(std::make_shared<Wall>(X, Y));
+			SpawnActor(std::make_shared<Floor>(X, Y));
 			break;
 		case 'P':
 			SpawnActor(std::make_shared<Player>(X, Y));
+			SpawnActor(std::make_shared<Floor>(X, Y));
 			break;
 		case 'G':
 			SpawnActor(std::make_shared<Goal>(X, Y));
+			SpawnActor(std::make_shared<Floor>(X, Y));
 			break;
 		}
 
@@ -183,13 +192,13 @@ void MyEngine::Tick()
 	//엔진에서 기본 처리 하는 이벤트
 	switch (MyEvent.type)
 	{
-	case SDL_QUIT:							// 닫기 누르면 이벤트 종료
+	case SDL_QUIT:
 		bIsRunning = false;
 		break;
-	case SDL_KEYDOWN:						// 키누르면 어떤 키가 눌린지 잡힘
+	case SDL_KEYDOWN:
 		switch (MyEvent.key.keysym.sym)
 		{
-		case SDLK_q:						// q 누르면 종료
+		case SDLK_q:
 			bIsRunning = false;
 			break;
 		}

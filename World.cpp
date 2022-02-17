@@ -1,5 +1,6 @@
 #include "World.h"
 #include "Actor.h"
+#include <algorithm>
 
 World::World()
 {
@@ -7,6 +8,7 @@ World::World()
 
 World::~World()
 {
+	//c++ 14 
 	//UE4 
 	//for (int i = 0; i < ActorList.size(); ++i)
 	//{
@@ -14,34 +16,36 @@ World::~World()
 	//	ActorList[i] = nullptr;
 	//}
 
-	//for (auto iter = ActorList.begin(); iter != ActorList.end(); ++iter)			// 	밑에랑 똑같은거
+	//for (auto iter = ActorList.begin(); iter != ActorList.end(); ++iter)
 	////for (std::vector<Actor*>::iterator iter = ActorList.begin(); iter != ActorList.end(); ++iter)
 	//{
 	//	delete *iter;
 	//	*iter = nullptr;
 	//}
 
-	// range for
-	for (auto CurrentActor : ActorList)		// 만든 액터 리스트 탐색해서 지우기
+	//range for
+	for (auto CurrentActor : ActorList)
 	{
-		// delete CurrentActor;
+		//		delete CurrentActor;
 		CurrentActor = nullptr;
 	}
 
-	ActorList.clear();						// 액터 리스트도 초기화
+	ActorList.clear();
 }
 
 void World::SpawnActor(std::shared_ptr<Actor> NewActor)
 {
-	ActorList.push_back(NewActor);			// 새로만든 액터 넣어주기
+	ActorList.push_back(NewActor);
+
+	sort(ActorList.begin(), ActorList.end(), Actor::Compare);
 }
 
 void World::DestroyActor(std::shared_ptr<Actor> DestroyActor)
 {
-	//자료구조 Actor 리스트에서 관리 리스트에서 삭제
+	//자료 구조 Actor리스트에서 관리 리스트에서 삭제
 	ActorList.erase(find(ActorList.begin(), ActorList.end(), DestroyActor));
 	//메모리에서 실제로 삭제
-	// delete DestroyActor;
+	//delete DestroyActor;
 	DestroyActor = nullptr;
 }
 
@@ -60,6 +64,7 @@ void World::Render()
 		SelectedActor->Render();
 	}
 }
+
 
 void World::BeginPlay()
 {
