@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include "SDL.h"
-#include<memory>
+#include <memory>
 
 class Actor;
 
@@ -18,10 +18,13 @@ public:
 	void Render();
 	void BeginPlay();
 
-	const std::vector<std::shared_ptr<Actor>>& GetActorList() { return ActorList; }  // 원본 값 지우지 못하게 const 사용
+	const std::vector<std::shared_ptr<Actor>>& GetActorList() { return ActorList; }
+
+	Uint64 GetWorldDeltaSeconds() { return DeltaSeconds; };
 
 protected:
 	std::vector<std::shared_ptr<Actor>> ActorList;
 
+	Uint64 LastTick;
+	Uint64 DeltaSeconds;
 };
-

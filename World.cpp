@@ -51,6 +51,8 @@ void World::DestroyActor(std::shared_ptr<Actor> DestroyActor)
 
 void World::Tick()
 {
+	DeltaSeconds = SDL_GetTicks64() - LastTick;
+
 	for (auto SelectedActor : ActorList)
 	{
 		SelectedActor->Tick();
@@ -63,6 +65,8 @@ void World::Render()
 	{
 		SelectedActor->Render();
 	}
+
+	LastTick = SDL_GetTicks64();
 }
 
 

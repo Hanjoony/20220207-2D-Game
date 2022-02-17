@@ -6,6 +6,7 @@
 #include "Goal.h"
 #include "Floor.h"
 #include <iostream>
+#include "Monster.h"
 
 //MyEngine::MyEngine()
 //{
@@ -115,6 +116,10 @@ void MyEngine::LoadLevel(std::string LoadMapName)
 			break;
 		case 'G':
 			SpawnActor(std::make_shared<Goal>(X, Y));
+			SpawnActor(std::make_shared<Floor>(X, Y));
+			break;
+		case 'E':
+			SpawnActor(std::make_shared<Monster>(X, Y));
 			SpawnActor(std::make_shared<Floor>(X, Y));
 			break;
 		}

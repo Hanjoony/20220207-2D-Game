@@ -45,6 +45,7 @@ protected:
 
 	int ZOrder;
 
+
 public:
 	bool bIsBlock;
 };

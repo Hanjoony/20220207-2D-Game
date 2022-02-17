@@ -145,6 +145,7 @@
     <ClInclude Include="Actor.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="Goal.h" />
+    <ClInclude Include="Monster.h" />
     <ClInclude Include="MyEngine.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Util.h" />
@@ -156,6 +157,7 @@
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="Goal.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MyEngine.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Util.cpp" />
