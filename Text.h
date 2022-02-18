@@ -5,6 +5,7 @@
 class Text : public Actor
 {
 public:
+	Text() {}
 	Text(int NewX, int NewY, std::string NewText, int Size);
 	virtual ~Text();
 

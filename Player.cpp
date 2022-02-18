@@ -2,6 +2,7 @@
 #include "MyEngine.h"
 #include "World.h"
 #include "Goal.h"
+#include "TextComplete.h"
 
 Player::Player()
 {
@@ -37,7 +38,7 @@ void Player::Init(int NewX, int NewY)
 	ColorKey.b = 255;
 
 	ElapseTime = 0;
-	ProcessTime = 200;
+	ProcessTime = 500;
 
 	SpriteIndex = 0;
 	SpriteDirection = 0;
@@ -45,6 +46,15 @@ void Player::Init(int NewX, int NewY)
 
 void Player::Tick()
 {
+	ElapseTime += MyEngine::GetWorld()->GetWorldDeltaSeconds();
+
+	if (ElapseTime >= ProcessTime)
+	{
+		SpriteIndex++;
+		SpriteIndex = SpriteIndex % 5;
+		ElapseTime = 0;
+	}
+
 	if (MyEngine::GetEvent().type == SDL_KEYDOWN)
 	{
 		switch (MyEngine::GetEvent().key.keysym.sym)
@@ -83,23 +93,13 @@ void Player::Tick()
 
 void Player::Render()
 {
-	ElapseTime += MyEngine::GetWorld()->GetWorldDeltaSeconds();
-
-	if (ElapseTime >= ProcessTime)
-	{
-		SpriteIndex++;
-		SpriteIndex = SpriteIndex % 5;
-		ElapseTime = 0;
-	}
-
-
 	int SpriteWidth = Surface->w / 5;
 	int SpriteHeight = Surface->h / 5;
 	int SpriteIndexX = SpriteIndex;
 	int SpriteIndexY = SpriteDirection;
 	int StartX = SpriteWidth * SpriteIndexX;
 	int StartY = SpriteHeight * SpriteIndexY;
-	SDL_Rect SrcRect = { StartX, StartY, SpriteWidth, SpriteHeight };			// 전체 크기에서 나눠서 출력 (지정한 시작점부터 나눈부분 까지 출력)
+	SDL_Rect SrcRect = { StartX, StartY, SpriteWidth, SpriteHeight };
 	SDL_Rect DestRect = { GetX() * TileSize, GetY() * TileSize, TileSize, TileSize };
 
 	SDL_RenderCopy(MyEngine::GetRenderer(), Texture, &SrcRect, &DestRect);
@@ -107,18 +107,15 @@ void Player::Render()
 
 void Player::CheckGoal()
 {
-	//IsGameOver
 	for (auto Object : MyEngine::GetWorld()->GetActorList())
 	{
-		// (STL C++) Player* CheckPlayer = dynamic_cast<Player>(Object);
-		// (UE) Player* CheckPlayer = Cast<Player>(Object);
 		std::shared_ptr<Goal> CheckGoal = std::dynamic_pointer_cast<Goal>(Object);
 
 		if (CheckGoal)
 		{
 			if (Object->GetX() == X && Object->GetY() == Y)
 			{
-				MyEngine::GetEngine()->Stop();
+				GEngine->SpawnActor(std::make_shared<TextComplete>(100, 200, "Complete", 100, 3000));
 				break;
 			}
 		}

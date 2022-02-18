@@ -77,3 +77,8 @@ void World::BeginPlay()
 		SelectedActor->BeginPlay();
 	}
 }
+
+void World::DestroyWorld()
+{
+	ActorList.clear();
+}

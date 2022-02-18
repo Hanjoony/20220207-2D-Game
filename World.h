@@ -18,6 +18,8 @@ public:
 	void Render();
 	void BeginPlay();
 
+	void DestroyWorld();
+
 	const std::vector<std::shared_ptr<Actor>>& GetActorList() { return ActorList; }
 
 	Uint64 GetWorldDeltaSeconds() { return DeltaSeconds; };

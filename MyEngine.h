@@ -25,6 +25,8 @@ public:
 	void LoadLevel(std::string LoadMapName);
 	void SaveLevel(std::string SaveMapName);
 
+	void UnloadLevel();
+
 	inline static SDL_Window* GetWindow() { return MyWindow; }
 	inline static SDL_Renderer* GetRenderer() { return MyRenderer; }
 	inline static SDL_Event& GetEvent() { return MyEvent; }

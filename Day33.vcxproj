@@ -149,6 +149,9 @@
     <ClInclude Include="MyEngine.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Text.h" />
+    <ClInclude Include="TextComplete.h" />
+    <ClInclude Include="TextYouDied.h" />
+    <ClInclude Include="TimerText.h" />
     <ClInclude Include="Util.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="World.h" />
@@ -162,6 +165,9 @@
     <ClCompile Include="MyEngine.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Text.cpp" />
+    <ClCompile Include="TextComplete.cpp" />
+    <ClCompile Include="TextYouDied.cpp" />
+    <ClCompile Include="TimerText.cpp" />
     <ClCompile Include="Util.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="World.cpp" />

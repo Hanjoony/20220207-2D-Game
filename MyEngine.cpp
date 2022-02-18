@@ -196,6 +196,11 @@ void MyEngine::SaveLevel(std::string SaveMapName)
 	WriteFile.close();
 }
 
+void MyEngine::UnloadLevel()
+{
+	GetWorld()->DestroyWorld();
+}
+
 void MyEngine::BeginPlay()
 {
 	CurrentWorld->BeginPlay();
