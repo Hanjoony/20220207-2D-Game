@@ -9,6 +9,8 @@
 #include "Monster.h"
 #include "SDL_ttf.h"
 #include "Text.h"
+#include "SDL_mixer.h"
+#include "BGM.h"
 
 //MyEngine::MyEngine()
 //{
@@ -60,6 +62,8 @@ void MyEngine::Init(std::string Title, int Width, int Height)
 	Instance = this;
 
 	TTF_Init();
+
+	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
 }
 
 void MyEngine::Term()
@@ -99,6 +103,8 @@ void MyEngine::DestroyActor(std::shared_ptr<Actor> DestroyActor)
 
 void MyEngine::LoadLevel(std::string LoadMapName)
 {
+	SpawnActor(std::make_shared<BGM>("data/bgm.mp3"));
+
 	std::ifstream MapFile(LoadMapName);
 	int X = 0;
 	int Y = 0;
