@@ -18,6 +18,7 @@ SDL_Window* MyEngine::MyWindow = nullptr;
 SDL_Renderer* MyEngine::MyRenderer = nullptr;
 SDL_Event MyEngine::MyEvent;
 std::unique_ptr<World> MyEngine::CurrentWorld;
+MyEngine* MyEngine::Instance = nullptr;
 
 
 MyEngine::MyEngine(std::string Title, std::string LevelName, int Width, int Height)
@@ -53,6 +54,8 @@ void MyEngine::Init(std::string Title, int Width, int Height)
 	{
 		std::cout << "can't Create renderer :" << SDL_GetError() << std::endl;
 	}
+
+	Instance = this;
 }
 
 void MyEngine::Term()

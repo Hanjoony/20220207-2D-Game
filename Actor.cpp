@@ -1,4 +1,4 @@
-#include "Actor.h"
+﻿#include "Actor.h"
 #include <iostream>
 #include "Util.h"
 #include "MyEngine.h"
@@ -26,30 +26,33 @@ void Actor::Init(int NewX, int NewY)
 
 	ZOrder = 0;
 	Color = SDL_Color();
+
+	ColorKey.r = 255;
+	ColorKey.g = 255;
+	ColorKey.b = 255;
+	ColorKey.a = 255;
 }
-
-
 
 Actor::~Actor()
 {
 	if (Surface)
 	{
 		SDL_FreeSurface(Surface);
+		Surface = nullptr;
 	}
 
 	if (Texture)
 	{
 		SDL_DestroyTexture(Texture);
+		Texture = nullptr;
 	}
 }
 
-void Actor::Tick()
-{
-}
+
 
 void Actor::Render()
 {
-	//static ��?��? ??��?
+	//static ¸â¹ö ÇÔ¼ö
 	//Util::GotoXY(GetX(), GetY());
 	//std::cout << GetShape() << std::endl;
 
@@ -108,6 +111,10 @@ void Actor::LoadBMP(std::string ImageName)
 {
 	//RAM
 	Surface = SDL_LoadBMP(ImageName.c_str());
+	
+	//ColorKey
+	SDL_SetColorKey(Surface, 1, SDL_MapRGB(Surface->format, ColorKey.r, ColorKey.g, ColorKey.b));	// 해당 색상을 투명하게
+
 	//GPU VRAM
 	Texture = SDL_CreateTextureFromSurface(MyEngine::GetRenderer(),
 		Surface);

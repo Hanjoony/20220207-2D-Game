@@ -14,4 +14,10 @@ public:
 	virtual void Tick() override;
 
 	virtual void Render() override;
+
+protected:
+	Uint64 ElapseTime;			// ½Ã°£
+	Uint64 ProcessTime;
+	int SpriteIndex;
+	int SpriteDirection;
 };

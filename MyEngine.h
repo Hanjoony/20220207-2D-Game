@@ -30,6 +30,8 @@ public:
 	inline static SDL_Event& GetEvent() { return MyEvent; }
 	inline static std::unique_ptr<World>& GetWorld() { return CurrentWorld; }
 
+	inline static MyEngine* GetEngine() { return Instance; }
+
 protected:
 	void BeginPlay();
 	void Tick();
@@ -43,4 +45,6 @@ protected:
 	static SDL_Window* MyWindow;
 	static SDL_Renderer* MyRenderer;
 	static SDL_Event MyEvent;
+
+	static MyEngine* Instance;
 };

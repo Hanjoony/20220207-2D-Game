@@ -14,7 +14,7 @@ public:
 
 	virtual ~Actor();
 
-	virtual void Tick();
+	virtual void Tick() = 0;		// 순수 가상함수, 자식 클래스에서 무조건 재정의 해야함, 인터페이스를 강제 하기 위해서 사용
 	virtual void Render();
 	virtual void BeginPlay();
 
@@ -45,6 +45,7 @@ protected:
 	int Y;
 	char Shape;
 	SDL_Color Color;
+	SDL_Color ColorKey;
 	int TileSize = 30;
 
 	int ZOrder;

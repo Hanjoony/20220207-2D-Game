@@ -8,6 +8,7 @@ public:
 	Wall(int NewX, int NewY, std::string ImageName);
 	virtual ~Wall();
 	virtual void Init(int NewX, int NewY) override;
+	virtual void Tick() override { }
 
 	virtual void Render() override;
 };
