@@ -9,6 +9,8 @@ public:
 	Actor();
 	Actor(int NewX, int NewY);
 
+	virtual void Init(int NewX, int NewY);
+
 
 	virtual ~Actor();
 
@@ -35,6 +37,8 @@ public:
 	bool CanMove(int FutureX, int FutureY);
 
 
+	void LoadBMP(std::string ImageName);
+
 
 protected:
 	int X;
@@ -44,6 +48,9 @@ protected:
 	int TileSize = 30;
 
 	int ZOrder;
+
+	SDL_Surface* Surface;
+	SDL_Texture* Texture;
 
 
 public:

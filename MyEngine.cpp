@@ -104,23 +104,23 @@ void MyEngine::LoadLevel(std::string LoadMapName)
 			Y++;
 			continue;
 		case ' ':
-			SpawnActor(std::make_shared<Floor>(X, Y));
+			SpawnActor(std::make_shared<Floor>(X, Y, "data/floor.bmp"));
 			break;
 		case '*':
-			SpawnActor(std::make_shared<Wall>(X, Y));
-			SpawnActor(std::make_shared<Floor>(X, Y));
+			SpawnActor(std::make_shared<Wall>(X, Y, "data/wall.bmp"));
+			SpawnActor(std::make_shared<Floor>(X, Y, "data/floor.bmp"));
 			break;
 		case 'P':
-			SpawnActor(std::make_shared<Player>(X, Y));
-			SpawnActor(std::make_shared<Floor>(X, Y));
+			SpawnActor(std::make_shared<Player>(X, Y, "data/test.bmp"));
+			SpawnActor(std::make_shared<Floor>(X, Y, "data/floor.bmp"));
 			break;
 		case 'G':
-			SpawnActor(std::make_shared<Goal>(X, Y));
-			SpawnActor(std::make_shared<Floor>(X, Y));
+			SpawnActor(std::make_shared<Goal>(X, Y, "data/coin.bmp"));
+			SpawnActor(std::make_shared<Floor>(X, Y, "data/floor.bmp"));
 			break;
 		case 'E':
-			SpawnActor(std::make_shared<Monster>(X, Y));
-			SpawnActor(std::make_shared<Floor>(X, Y));
+			SpawnActor(std::make_shared<Monster>(X, Y, "data/slime.bmp"));
+			SpawnActor(std::make_shared<Floor>(X, Y, "data/floor.bmp"));
 			break;
 		}
 

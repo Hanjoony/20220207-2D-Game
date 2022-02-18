@@ -4,47 +4,32 @@
 
 Player::Player()
 {
-	X = 0;
-	Y = 0;
-	Shape = 'P';
-	Color.r = 0xff;
-	Color.g = 0x00;
-	Color.b = 0x00;
-	Color.a = 0xff;
-
-	ZOrder = 2;
+	Init(0, 0);
 }
 
-Player::Player(int NewX, int NewY)
+Player::Player(int NewX, int NewY, std::string ImageName)
 {
-	X = NewX;
-	Y = NewY;
-	Shape = 'P';
-	Color.r = 0xff;
-	Color.g = 0x00;
-	Color.b = 0x00;
-	Color.a = 0xff;
-
-	ZOrder = 2;
-
-	//RAM
-	Surface = SDL_LoadBMP("Data/wall.bmp");
-	//GPU VRAM
-	Texture = SDL_CreateTextureFromSurface(MyEngine::GetRenderer(),
-		Surface);
+	Init(NewX, NewY);
+	LoadBMP(ImageName);
 }
 
 Player::~Player()
 {
-	if (Surface)
-	{
-		SDL_FreeSurface(Surface);
-	}
+}
 
-	if (Texture)
-	{
-		SDL_DestroyTexture(Texture);
-	}
+void Player::Init(int NewX, int NewY)
+{
+	Actor::Init(NewX, NewY);
+	Shape = 'P';
+	Color.r = 0xff;
+	Color.g = 0x00;
+	Color.b = 0x00;
+	Color.a = 0xff;
+
+	ZOrder = 2;
+
+	Surface = nullptr;
+	Texture = nullptr;
 }
 
 void Player::Tick()
@@ -71,8 +56,5 @@ void Player::Tick()
 
 void Player::Render()
 {
-	SDL_Rect SrcRect = { 0, 0, Surface->w, Surface->h };
-	SDL_Rect DestRect = { GetX() * TileSize, GetY() * TileSize, TileSize, TileSize };
-
-	SDL_RenderCopy(MyEngine::GetRenderer(), Texture, &SrcRect, &DestRect);
+	Actor::Render();
 }

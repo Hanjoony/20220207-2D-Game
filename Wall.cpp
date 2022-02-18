@@ -3,31 +3,29 @@
 
 Wall::Wall()
 {
-	X = 0;
-	Y = 0;
-	Shape = '*';
-	Color.r = 0x80;
-	Color.g = 0x3a;
-	Color.b = 0x30;
-	Color.a = 0xff;
-	ZOrder = 1;
-	bIsBlock = true;
+	Init(0, 0);
 }
 
-Wall::Wall(int NewX, int NewY)
+Wall::Wall(int NewX, int NewY, std::string ImageName)
 {
-	SetActorLocation(NewX, NewY);
-	Shape = '*';
-	Color.r = 0x80;
-	Color.g = 0x3a;
-	Color.b = 0x30;
-	Color.a = 0xff;
-	ZOrder = 1;
-	bIsBlock = true;
+	Init(NewX, NewY);
+	LoadBMP(ImageName);
 }
 
 Wall::~Wall()
 {
+}
+
+void Wall::Init(int NewX, int NewY)
+{
+	Actor::Init(NewX, NewY);
+	Shape = '*';
+	Color.r = 0x80;
+	Color.g = 0x3a;
+	Color.b = 0x30;
+	Color.a = 0xff;
+	ZOrder = 1;
+	bIsBlock = true;
 }
 
 void Wall::Render()

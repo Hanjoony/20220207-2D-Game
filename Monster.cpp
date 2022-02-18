@@ -4,24 +4,22 @@
 
 Monster::Monster()
 {
-	X = 0;
-	Y = 0;
-	Shape = 'E';
-	Color.r = 0x81;
-	Color.g = 0x18;
-	Color.b = 0x82;
-	Color.a = 0xff;
-
-	ZOrder = 3;
-
-	ElapseTime = 0;
-	ProcessTime = 100;
+	Init(0, 0);
 }
 
-Monster::Monster(int NewX, int NewY)
+Monster::Monster(int NewX, int NewY, std::string ImageName)
 {
-	X = NewX;
-	Y = NewY;
+	Init(NewX, NewY);
+	LoadBMP(ImageName);
+}
+
+Monster::~Monster()
+{
+}
+
+void Monster::Init(int NewX, int NewY)
+{
+	Actor::Init(NewX, NewY);
 	Shape = 'E';
 	Color.r = 0x81;
 	Color.g = 0x18;
@@ -33,10 +31,6 @@ Monster::Monster(int NewX, int NewY)
 
 	ElapseTime = 0;
 	ProcessTime = 100;
-}
-
-Monster::~Monster()
-{
 }
 
 void Monster::Tick()
