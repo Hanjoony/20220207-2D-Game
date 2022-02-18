@@ -48,3 +48,6 @@ protected:
 
 	static MyEngine* Instance;
 };
+
+
+#define GEngine MyEngine::GetEngine()

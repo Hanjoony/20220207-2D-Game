@@ -7,6 +7,8 @@
 #include "Floor.h"
 #include <iostream>
 #include "Monster.h"
+#include "SDL_ttf.h"
+#include "Text.h"
 
 //MyEngine::MyEngine()
 //{
@@ -56,10 +58,14 @@ void MyEngine::Init(std::string Title, int Width, int Height)
 	}
 
 	Instance = this;
+
+	TTF_Init();
 }
 
 void MyEngine::Term()
 {
+	TTF_Quit();
+
 	SDL_DestroyRenderer(MyRenderer);
 	SDL_DestroyWindow(MyWindow);
 	SDL_Quit();

@@ -2,6 +2,7 @@
 #include "MyEngine.h"
 #include "World.h"
 #include "Player.h"
+#include "Text.h"
 #include <memory>
 
 Monster::Monster()
@@ -61,19 +62,22 @@ void Monster::Tick()
 		ElapseTime = 0;
 	}
 
-	//IsGameOver
+	//isGameOver
 	for (auto Object : MyEngine::GetWorld()->GetActorList())
 	{
-		// (STL C++) Player* CheckPlayer = dynamic_cast<Player>(Object);
-		// (UE) Player* CheckPlayer = Cast<Player>(Object);
+		//STL C++
+		//Player* CheckPlayer = dynamic_cast<Player>(Object);
+		//UE
+		//Player* CheckPlayer = Cast<Player>(Object);
 		std::shared_ptr<Player> CheckPlayer = std::dynamic_pointer_cast<Player>(Object);
 
 		if (CheckPlayer)
 		{
 			if (Object->GetX() == X && Object->GetY() == Y)
 			{
-			MyEngine::GetEngine()->Stop();
-			break;
+				//MyEngine::GetEngine()->Stop();
+				GEngine->SpawnActor(std::make_shared<Text>(100, 200, "You Died!", 100));
+				break;
 			}
 		}
 	}
