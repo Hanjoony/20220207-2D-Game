@@ -15,6 +15,8 @@ public:
 
 	virtual void Render() override;
 
+	void CheckGoal();
+
 protected:
 	Uint64 ElapseTime;			// ½Ã°£
 	Uint64 ProcessTime;
